@@ -20,23 +20,18 @@ def loadWords():
     take a while to finish.
     """
     print("Loading word list from file...")
-    # inFile: file
-    inFile = open(WORDLIST_FILENAME, 'r')
-    # line: string
-    line = inFile.readline()
-    # wordlist: list of strings
-    wordlist = line.split()
+    inFile = open(WORDLIST_FILENAME, 'r')  # inFile: file
+    line = inFile.readline()  # line: string
+    wordlist = line.split()  # wordlist: list of strings
     print("  ", len(wordlist), "words loaded.")
     return wordlist
+
 
 def chooseWord(wordlist):  # chooses random word from 'words.txt'
     return random.choice(wordlist)
 
-# end of helper code
-# -----------------------------------
 
-# Load the list of words into the variable wordlist
-# so that it can be accessed from anywhere in the program
+# Load the list of words into the variable wordlist so that it can be accessed from anywhere in the program
 wordlist = loadWords()
 lettersGuessed = []
 
