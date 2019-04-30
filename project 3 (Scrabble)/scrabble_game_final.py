@@ -1,7 +1,7 @@
 # The 6.00 Word Game
 
 import random
-import string
+
 
 VOWELS = 'aeiou'
 CONSONANTS = 'bcdfghjklmnpqrstvwxyz'
@@ -11,10 +11,8 @@ SCRABBLE_LETTER_VALUES = {
     'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4, 'g': 2, 'h': 4, 'i': 1, 'j': 8, 'k': 5, 'l': 1, 'm': 3, 'n': 1, 'o': 1, 'p': 3, 'q': 10, 'r': 1, 's': 1, 't': 1, 'u': 1, 'v': 4, 'w': 4, 'x': 8, 'y': 4, 'z': 10
 }
 
-# -----------------------------------
-# Helper code
-
 WORDLIST_FILENAME = "words.txt"
+
 
 def loadWords():
     """
@@ -33,6 +31,7 @@ def loadWords():
     print("  ", len(wordList), "words loaded.")
     return wordList
 
+
 def getFrequencyDict(sequence):
     """
     Returns a dictionary where the keys are elements of the sequence
@@ -47,10 +46,6 @@ def getFrequencyDict(sequence):
     for x in sequence:
         freq[x] = freq.get(x,0) + 1
     return freq
-	
-
-# (end of helper code)
-# -----------------------------------
 
 
 # Problem #1: Scoring a word
@@ -96,8 +91,8 @@ def displayHand(hand):
     """
     for letter in hand.keys():
         for j in range(hand[letter]):
-             print(letter,end=" ")       # print all on the same line
-    print()                             # print an empty line
+             print(letter,end=" ")  # print all on the same line
+    print()
 
 
 # Problem #3: Deal a randoly generated hand of letters
@@ -144,11 +139,11 @@ def updateHand(hand, word):
     hand: dictionary (string -> int)    
     returns: dictionary (string -> int)
     """
-    handCopy = hand.copy()  #make copy of hand to prevent mutation of orig hand dealt
+    handCopy = hand.copy()  # make copy of hand to prevent mutation of orig hand dealt
     
-    for letter in word:  #course through each letter in word
-        if letter in handCopy.keys():  #check to see if letter in word also in current hand
-            handCopy[letter] = handCopy[letter] - 1  #decrement 1x for each time letter from hand used in word 
+    for letter in word:  # course through each letter in word
+        if letter in handCopy.keys():  # check to see if letter in word and current hand
+            handCopy[letter] = handCopy[letter] - 1  # decrement 1x for each time letter from hand used in word 
     
     return handCopy
 
@@ -165,27 +160,27 @@ def isValidWord(word, hand, wordList):
     hand: dictionary (string -> int)
     wordList: list of lowercase strings
     """
-    handCopy = hand.copy()  #create copy of hand
-    letterCount = []  #create counter for letters in word
-    wordCopy = word  #create copy of word
+    handCopy = hand.copy()  # create copy of hand
+    letterCount = []  # create counter for letters in word
+    wordCopy = word  # create copy of word
     
     if wordCopy not in wordList:
         return False
         
-    if wordCopy in wordList:  #ensure word is valid word from wordList
+    if wordCopy in wordList:  # ensure word is valid word from wordList
         for letter in wordCopy:
             if letter in handCopy:
-                letterCount.append(wordCopy.count(letter))  #if letter in word matches letter in hand dealt, add the frequency of that letter to letterCount
-                wordCopy = wordCopy.replace(letter, '')  #remove letter from word to avoid duplicate counts
+                letterCount.append(wordCopy.count(letter))  # if letter in word matches letter in hand dealt, add frequency of that letter to letterCount
+                wordCopy = wordCopy.replace(letter, '')  # remove letter from word to avoid duplicate counts
             else:
                 return False
                 
         for i in letterCount:
             if i == 0:
-                letterCount.remove(0)  #remove any zeroes created from the removal of duplicate letters from the word
+                letterCount.remove(0)  # remove any zeroes created from removal of duplicate letters from word
             
             for key in handCopy:
-                if i > handCopy[key]:  #ensure number of letters in hand dealt are enough to spell word
+                if i > handCopy[key]:  # ensure number of letters in hand dealt are enough to spell word
                     return False
                 else:
                     return True
@@ -227,7 +222,7 @@ def playHand(hand, wordList, n):
     """
     # Keep track of the total score
     totScore = 0
-    wordCount = 0  #counter to see how many valid words were created
+    wordCount = 0  # counter to see how many valid words were created
     # As long as there are still letters left in the hand:
     while n > 0:
         # Display the hand
@@ -237,14 +232,14 @@ def playHand(hand, wordList, n):
         # Ask user for input
         word = input('Enter word, or a "." to indicate that you are finished: ')
 
-        # If the input is a single period:
+        # If input is a single period:
         if word == '.':
-            # End the game (break out of the loop)
+            # End game (break out of the loop)
             break
             
         # Otherwise (the input is not a single period):
         if word != '.':
-            # If the word is not valid:
+            # If  word is not valid:
             if isValidWord(word, hand, wordList) == False:
                 # Reject invalid word (print a message followed by a blank line)
                 print('Invalid word, please try again.', '\n')
@@ -252,20 +247,20 @@ def playHand(hand, wordList, n):
             # Otherwise (the word is valid):
             else:
                 # Tell the user how many points the word earned, and the updated total score, in one line followed by a blank line
-                wordScore = getWordScore(word, n)  #get score for word
-                totScore += wordScore  #get total score                
+                wordScore = getWordScore(word, n)  # get score for word
+                totScore += wordScore  # get total score                
                 
-                #if not all letters used in first hand
+                # if not all letters used in first hand
                 if n == len(word) and wordCount != 0:  
-                    totScore = totScore - 50  #subtract 50 pts from total score
-                    wordScore = wordScore - 50  #subtract 50 pts from word score
+                    totScore = totScore - 50  # subtract 50 pts from total score
+                    wordScore = wordScore - 50  # subtract 50 pts from word score
 
                 print('"', word,'"', 'earned', wordScore, 'points.', 'Total:', totScore, 'points.', '\n')
 
                 # Update the hand 
                 hand = updateHand(hand, word)
-                n = calculateHandlen(hand)  #update hand length
-                wordCount += 1  #update word count
+                n = calculateHandlen(hand)  # update hand length
+                wordCount += 1  # update word count
                 
     # Game is over (user entered a '.' or ran out of letters), so tell user the total score
     if word == '.':
@@ -313,7 +308,8 @@ def playGame(wordList):
             print("Invalid command.")
             
         else:
-            print('Thanks for playing this word game!  e:)  Ciao!', '\n', '=============================================', '\n')
+            print()
+            print('Ciao!', '\n', '======+++<<<  GAME OVER  >>>+++======', '\n')
             break
 
 
