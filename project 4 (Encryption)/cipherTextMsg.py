@@ -103,44 +103,41 @@ class Message(object):
         Returns: a dictionary mapping a letter (string) to 
                  another letter (string). 
         '''
-#        shift = 13  #establish cipher shift
-        
         origKeys = []  #create original keys
         for lower in string.ascii_lowercase:
             origKeys.append(lower)
         for upper in string.ascii_uppercase:
             origKeys.append(upper)
         
-        origVals = []  #cretae original values
-        for i in range(0,26):  #assign a-z vaues 0-25
+        origVals = []  # create original values
+        for i in range(0,26):  # assign a-z vaues 0-25
             origVals.append(i)
-        for i in range(26, 52):  #assign A-Z values 52-77
+        for i in range(26, 52):  # assign A-Z values 52-77
             origVals.append(i+26)
                    
-        origDict = dict(zip(origKeys, origVals))  #create the original dictionary  
+        origDict = dict(zip(origKeys, origVals))  # create original dictionary  
         
-        newDict = origDict.copy()  #create copy of origDict to create newDict
-        for key, value in newDict.items():  #assign new values due to shift
-            for newDict[key] in range(0,26):  #for a-z
+        newDict = origDict.copy()  # create copy of origDict to create newDict
+        for key, value in newDict.items():  # assign new values due to shift
+            for newDict[key] in range(0,26):  # for a-z
                 newDict[key] = value - shift              
                     
-            for newDict[key] in range(26, 52):  #for A-Z
+            for newDict[key] in range(26, 52):  # for A-Z
                 newDict[key] = value - shift
 
-        for key, value in newDict.items():  #correct order
-            if newDict[key] < 0:  #of a-z
+        for key, value in newDict.items():  # correct order
+            if newDict[key] < 0:  # of a-z
                 newDict[key] += 26
-            if 26 < newDict[key] < 52:  #of A-Z
+            if 26 < newDict[key] < 52:  # of A-Z
                 newDict[key] += 26
                
-        shiftKeys = sorted(newDict, key=newDict.__getitem__)  #sort by value
-        shiftDict = dict(zip(origKeys, shiftKeys))  #create the new dictionary
+        shiftKeys = sorted(newDict, key=newDict.__getitem__)  # sort by value
+        shiftDict = dict(zip(origKeys, shiftKeys))  # create the new dictionary
 
         return shiftDict
 
 
     def apply_shift(self, shift):
-        
         '''
         Applies the Caesar Cipher to self.message_text with the input shift.
         Creates a new string that is self.message_text shifted down the
@@ -152,18 +149,18 @@ class Message(object):
         Returns: the message text (string) in which every character is shifted
              down the alphabet by the input shift
         '''
-        shiftMsg = []  #container for shifted message
-        cipher = Message.build_shift_dict(self, shift)  #bring in cipher from build_shift_dict()
+        shiftMsg = []  # container for shifted message
+        cipher = Message.build_shift_dict(self, shift)  # bring in cipher from build_shift_dict()
         
-        for i in self.message_text:  #check each character in message
-            if i in cipher.keys():  #if character upper or lower case letter
-                shiftMsg.append(cipher[i])  #add matching code letter to output
+        for i in self.message_text:  # check each character in message
+            if i in cipher.keys():  # if character upper or lower case letter
+                shiftMsg.append(cipher[i])  # add matching code letter to output
             else:
-                shiftMsg.append(i)  #if character punctuation or digit, add it to output
+                shiftMsg.append(i)  # if character punctuation or digit, add it to output
         
-        shiftMsg = ''.join(shiftMsg)  #convert list to string of characters
+        shiftMsg = ''.join(shiftMsg)  # convert list to string of characters
         
-        return shiftMsg  #return string
+        return shiftMsg  # return string
         
         
 
@@ -181,13 +178,10 @@ class PlaintextMessage(Message):
             self.shift (integer, determined by input shift)
             self.encrypting_dict (dictionary, built using shift)
             self.message_text_encrypted (string, created using shift)
-
-        Hint: consider using the parent class constructor so less 
-        code is repeated
         '''
+        
         self.message_text = text
         self.valid_words = load_words(WORDLIST_FILENAME)
-#        self.valid_words = self.get_valid_words
         self.shift = shift
         self.encrypting_dict = self.build_shift_dict(shift)
         self.message_text_encrypted = self.apply_shift(shift)
@@ -247,8 +241,8 @@ class CiphertextMessage(Message):
             self.message_text (string, determined by input text)
             self.valid_words (list, determined using helper function load_words)
         '''
-        self.message_text = text  #text  #string, determined by input text
-        self.valid_words = load_words(WORDLIST_FILENAME)  #list of all valid words
+        self.message_text = text  # string, determined by input text
+        self.valid_words = load_words(WORDLIST_FILENAME)  # list of all valid words
         
         
     def decrypt_message(self):
@@ -267,39 +261,39 @@ class CiphertextMessage(Message):
         Returns: a tuple of the best shift value used to decrypt the message
         and the decrypted message text using that shift value
         '''
-        mostWords = 0  #track the shift giving the largest number of valid decrypted words
-        bestShift = 0  #initialize bestShift at '0'
+        mostWords = 0  # track the shift giving the largest number of valid decrypted words
+        bestShift = 0  # initialize bestShift at '0'
         
-        for shift in range(0, 26):  #try all 26 possible shifts
-            message = Message.apply_shift(self, shift)  #get the decrypted message for respective shift
-            message = message.split(' ')  #convert message to a list of words
+        for shift in range(0, 26):  # try all 26 possible shifts
+            message = Message.apply_shift(self, shift)  # get the decrypted message for respective shift
+            message = message.split(' ')  # convert message to a list of words
             
-            for word in message:  #compare each word in message list to valid word list
+            for word in message:  # compare each word in message list to valid word list
                 if word not in self.valid_words:
-                    message.remove(word)  #remove invalid words from the message
+                    message.remove(word)  # remove invalid words from the message
                     
-            if len(message) > mostWords:  #update shift if better than previous
+            if len(message) > mostWords:  # update shift if better than previous
                 mostWords = len(message)
                 bestShift = shift
             else:
-                bestShift = bestShift  #if not better, do NOT update shift 
+                bestShift = bestShift  # if not better, do NOT update shift 
              
-        message = Message.apply_shift(self, bestShift)  #use the bestShift to generate the most likely vaid message
-        decryption = (bestShift, message)  #tuple, stores best shift and resulting message 
+        message = Message.apply_shift(self, bestShift)  # use the bestShift to generate the most likely vaid message
+        decryption = (bestShift, message)  # tuple, stores best shift and resulting message 
  
         return decryption
 
 
 #------- TEST ---------
 #print(Message.apply_shift('hi', 7))
-    
-    
-    
+
+#------- TEST ---------
 #Example test case (PlaintextMessage)
 #plaintext = PlaintextMessage('hello', 2)
 #print('Expected Output: jgnnq')
 #print('Actual Output:', plaintext.get_message_text_encrypted())
-    
+
+#------- TEST ---------
 #Example test case (CiphertextMessage)
 ciphertext = CiphertextMessage('jgnnq')
 print('Expected Output:', (24, 'hello'))
