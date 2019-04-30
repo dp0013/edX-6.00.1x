@@ -1,7 +1,8 @@
 # Hangman
 
-This code was written to create a Hangman game conforming to the following requirements as provided by MIT edX Intro to CS course (https://courses.edx.org/courses/course-v1:MITx+6.00.1x+2T2017_2/courseware/530b7f9a82784d0cb57de334828e3050/bfe9eb02884a4812883ff9e543887968/1?activate_block_id=block-v1%3AMITx%2B6.00.1x%2B2T2017_2%2Btype%40vertical%2Bblock%40c949e378fb2d42f1b30877fc01b3ef5b):
+This code was written to create a Hangman game conforming to the following requirements as provided by MIT edX Intro to CS course (https://courses.edx.org/courses/course-v1:MITx+6.00.1x+2T2017_2/courseware/530b7f9a82784d0cb57de334828e3050/bfe9eb02884a4812883ff9e543887968/1?activate_block_id=block-v1%3AMITx%2B6.00.1x%2B2T2017_2%2Btype%40vertical%2Bblock%40c949e378fb2d42f1b30877fc01b3ef5b).
 
+The criteria provided is as follows:
 
 - The computer must select a word at random from the list of available words that was provided in words.txt. The functions for loading the word list and selecting a random word have already been provided for you in ps3_hangman.py.
 
