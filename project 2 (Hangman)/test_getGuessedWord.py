@@ -2,7 +2,7 @@
 """
 Created on Wed Jan 4 18:13 2019
  
-@author: D. Plyler
+@author: dp
 """
 #secretWord = 'apple' 
 #lettersGuessed = ['e', 'i', 'k', 'p', 'r', 's']
