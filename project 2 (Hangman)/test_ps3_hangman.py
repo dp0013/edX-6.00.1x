@@ -2,7 +2,7 @@
 """
 Created on Wed Jan 4 18:13 2019
  
-@author: D. Plyler
+@author: dp
 
 Hangman game
 ----------------------------------
