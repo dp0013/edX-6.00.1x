@@ -2,7 +2,7 @@
 """
 Created on Tue May 15 09:37:53 2018
 Test Case: If balance = 320000, Lowest Payment: 29157.09
-@author: dplyler
+@author: dp
 """
 balance = 320000
 annualInterestRate = 0.2
