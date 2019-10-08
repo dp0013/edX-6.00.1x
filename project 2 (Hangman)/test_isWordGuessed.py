@@ -2,7 +2,7 @@
 """
 Created on Wed Jan  2 22:50:52 2019
  
-@author: D. Plyler
+@author: dp
 """
 secretWord = 'grapefruit' 
 lettersGuessed = ['h', 'z', 'r', 'a', 'p', 'e', 'f', 'r', 'u', 'i', 't']
