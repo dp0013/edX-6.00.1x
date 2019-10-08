@@ -2,7 +2,7 @@
 """
 Created on Thu Mar  7 16:04:57 2019
  
-@author: D. Plyler
+@author: dp
 """
 import string
 
