@@ -2,7 +2,7 @@
 """
 Created on Wed Jan  2 21:06:38 2019
  
-@author: D. Plyler
+@author: dp
 
 EXAMPLE USAGE:lettersGuessed = ['e', 'i', 'k', 'p', 'r', 's']
 print(getAvailableLetters(lettersGuessed))
